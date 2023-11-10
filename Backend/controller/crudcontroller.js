@@ -394,7 +394,7 @@ const search = async (req, res) => {
   console.log(category);
   try {
     if (indexExists.body) {
-      if (str =="" && category != "") {
+      if (str =="null" && category != "null") {
         console.log(latitude, longitude);
         const { body } = await client.search({
           index: `${req.query.domain}_${req.query.subdomain}`,
@@ -434,7 +434,7 @@ const search = async (req, res) => {
         });
         console.log(results);
       }
-      else if(str=="" && category=="")
+      else if(str=="null" && (category=="null" || category=="All"))
       {
         const { body } = await client.search({
           index: `${req.query.domain}_${req.query.subdomain}`,
@@ -471,7 +471,7 @@ const search = async (req, res) => {
       }
       else {
         console.log("helloqwertyu");
-        if (category!="") {
+        if (category!="null") {
           console.log(str);
           const { body } = await client.search({
             index: `${req.query.domain}_${req.query.subdomain}`,
