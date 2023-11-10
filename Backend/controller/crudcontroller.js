@@ -378,8 +378,8 @@ const deleteDocument = async (req, res) => {
   }
 }
 const search = async (req, res) => {
-  const str = req.query.searchstring;
-  const category = req.query.category;
+  const str = req.query.searchstring.toString();
+  const category = req.query.category.toString();
   const latitude = req.query.latitude;
   const longitude = req.query.longitude;
   // const geo = {
@@ -436,6 +436,7 @@ const search = async (req, res) => {
       }
       else if(str=="null" && (category=="null" || category=="All"))
       {
+        console.log(1);
         const { body } = await client.search({
           index: `${req.query.domain}_${req.query.subdomain}`,
           body: {
@@ -471,7 +472,7 @@ const search = async (req, res) => {
       }
       else {
         console.log("helloqwertyu");
-        if (category!="null") {
+        if (category!="null" && str!="null") {
           console.log(str);
           const { body } = await client.search({
             index: `${req.query.domain}_${req.query.subdomain}`,
@@ -493,7 +494,7 @@ const search = async (req, res) => {
 
                       query_string: {
                         fields: ['name','category'],
-                        query: `*${req.query.searchstring.toLowerCase()}*`,
+                        query: `*${str.toLowerCase()}*`,
                       },
 
                     }
@@ -519,7 +520,7 @@ const search = async (req, res) => {
                   query: {
                     query_string: {
                       fields: ['name'],
-                      query: `*${req.query.searchstring}*`,
+                      query: `*${str}*`,
                     },
                   },
                   highlight: {
