@@ -34,7 +34,7 @@ const createIndex = async (req, res) => {
         body: document
       });
       res.status(200).json({
-         message: process.env.SERVER_URL + "/" + domain });
+         message: process.env.SERVER_UR + "/" + domain });
     }
     else {
       res.status(409).json({ 
